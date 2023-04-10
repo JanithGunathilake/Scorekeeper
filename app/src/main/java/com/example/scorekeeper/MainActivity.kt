@@ -1,9 +1,12 @@
 package com.example.scorekeeper
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +55,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu)
+    }
+
     /**
      * Method that handles the onClick of both the increment buttons
      * @param view The button view that was clicked
@@ -74,6 +82,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Check if the correct item was clicked
+        if (item.itemId == R.id.night_mode) {
+            // Get the night mode state of the app.
+            val nightMode = AppCompatDelegate.getDefaultNightMode()
+            // Set the theme mode for the restarted activity.
+            if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            // Recreate the activity for the theme change to take effect.
+            recreate()
+        }
+
+        return true
+    }
+
 
 
 }
