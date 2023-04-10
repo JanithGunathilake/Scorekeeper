@@ -1,7 +1,7 @@
 package com.example.scorekeeper
 
-import android.R
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -9,20 +9,23 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     // Member variables for holding the score.
-    private var mScore1 = 0
-    private var mScore2 = 0
+    private var mScore1: Int = 0
+    private var mScore2: Int = 0
+
 
     // Member variables for holding the score.
-    private var mScoreText1: TextView? = null
-    private var mScoreText2: TextView? = null
+    private lateinit var mScoreText1: TextView
+    private lateinit var mScoreText2: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.ac)
+        setContentView(R.layout.activity_main)
 
         // Find the TextViews by ID.
-        mScoreText1 = findViewById(R.id.score_1);
-        mScoreText2 = findViewById(R.id.score_2);
+        mScoreText1 = findViewById(R.id.score_1) as TextView
+        mScoreText2 = findViewById(R.id.score_2) as TextView
+
 
     }
 
@@ -32,17 +35,19 @@ class MainActivity : AppCompatActivity() {
      */
     fun decreaseScore(view: View) {
         // Get the ID of the button that was clicked.
-        val viewID: Int = view.getId()
+        val viewID = view.id
         when (viewID) {
+            // If it was on Team 1
             R.id.decreaseTeam1 -> {
-                //Decrement the score and update the TextView
+                // Decrement the score and update the TextView
                 mScore1--
-                mScoreText1!!.text = mScore1.toString()
+                mScoreText1.text = mScore1.toString()
             }
+            // If it was Team 2
             R.id.decreaseTeam2 -> {
                 // Decrement the score and update the TextView
                 mScore2--
-                mScoreText2!!.text = mScore2.toString()
+                mScoreText2.text = mScore2.toString()
             }
         }
     }
@@ -53,19 +58,22 @@ class MainActivity : AppCompatActivity() {
      */
     fun increaseScore(view: View) {
         // Get the ID of the button that was clicked
-        val viewID: Int = view.getId()
+        val viewID = view.id
         when (viewID) {
+            // If it was on Team 1
             R.id.increaseTeam1 -> {
                 // Increment the score and update the TextView
                 mScore1++
-                mScoreText1!!.text = mScore1.toString()
+                mScoreText1.text = mScore1.toString()
             }
+            // If it was Team 2
             R.id.increaseTeam2 -> {
                 // Increment the score and update the TextView
                 mScore2++
-                mScoreText2!!.text = mScore2.toString()
+                mScoreText2.text = mScore2.toString()
             }
         }
     }
+
 
 }
