@@ -15,6 +15,10 @@ class MainActivity : AppCompatActivity() {
     private var mScore1: Int = 0
     private var mScore2: Int = 0
 
+    val STATE_SCORE_1: String = "Team 1 Score"
+    val STATE_SCORE_2: String = "Team 2 Score"
+
+
 
     // Member variables for holding the score.
     private lateinit var mScoreText1: TextView
@@ -29,8 +33,17 @@ class MainActivity : AppCompatActivity() {
         mScoreText1 = findViewById(R.id.score_1) as TextView
         mScoreText2 = findViewById(R.id.score_2) as TextView
 
+        savedInstanceState?.run {
+            mScore1 = getInt(STATE_SCORE_1)
+            mScore2 = getInt(STATE_SCORE_2)
+
+            // Set the score text views.
+            mScoreText1.text = mScore1.toString()
+            mScoreText2.text = mScore2.toString()
+        }
 
     }
+
 
     /**
      * Method that handles the onClick of both the decrement buttons
@@ -57,7 +70,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu)
+        var nightMode = AppCompatDelegate.getDefaultNightMode();
+        if(nightMode == AppCompatDelegate.MODE_NIGHT_YES){
+            if (menu != null) {
+                menu.findItem(R.id.night_mode).setTitle(R.string.day_mode)
+            };
+        } else {
+            if (menu != null) {
+                menu.findItem(R.id.night_mode).setTitle(R.string.night_mode)
+            };
+        }
+        return true;
     }
 
     /**
@@ -100,6 +123,14 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        // Save the scores.
+        outState.putInt(STATE_SCORE_1, mScore1)
+        outState.putInt(STATE_SCORE_2, mScore2)
+        super.onSaveInstanceState(outState)
+    }
+
 
 
 
